@@ -6,6 +6,7 @@ type ConnectionObject = {
 
 const connection: ConnectionObject = {};
 
+console.log("database connection page")
 async function dbConnect(): Promise<void> {
   if (connection.isConnected) {
     console.log("Already database is connected");
@@ -16,6 +17,7 @@ async function dbConnect(): Promise<void> {
     const db = await mongoose.connect(process.env.MONGODB_URI || "", {});
     console.log("What we get after connecting the database", db);
     console.log(db.connections);
+    console.log("Connected to database:", db.connections[0].name);
 
     connection.isConnected = db.connections[0].readyState;
 
