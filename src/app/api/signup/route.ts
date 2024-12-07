@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   console.log("DB is connected in signup route file.");
 
   try {
-    const { email, username, name, password } = await request.json();
+    const { email, username, password } = await request.json();
 
     // check user's email already exist in the database
     const existingUserVerifiedByUsername = await UserModel.findOne({

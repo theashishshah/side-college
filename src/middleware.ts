@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/singin', request.url))
   }
 
-  return NextResponse.redirect(new URL("/papa", request.url));
+  return NextResponse.redirect(new URL("/home", request.url));
 }
 
 export const config = {

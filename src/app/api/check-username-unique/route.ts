@@ -54,7 +54,7 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json(
-      { success: true, message: "username is available" },
+      { success: true, message: "Username is available" },
       { status: 400 }
     );
   } catch (error) {
