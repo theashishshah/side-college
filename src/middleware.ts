@@ -11,27 +11,32 @@ export async function middleware(request: NextRequest) {
 
   if (
     token &&
-    (url.pathname.startsWith("/auth/signin") ||
-      url.pathname.startsWith("/auth/signup") ||
+    (url.pathname.startsWith("/signin") ||
+      url.pathname.startsWith("/signup") ||
       url.pathname.startsWith("/verify") ||
-      url.pathname.startsWith("/"))
+      url.pathname === "/")
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  if(!token && url.pathname.startsWith('/dashboard')){
-    return NextResponse.redirect(new URL('/singin', request.url))
+  if (!token && url.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/singin", request.url));
   }
-
-  return NextResponse.redirect(new URL("/home", request.url));
+  return NextResponse.next();
+  // return NextResponse.redirect(new URL("/home", request.url));
 }
 
+// export const config = {
+//   matcher: [
+//     "/auth/signin",
+//     "/auth/signup",
+//     "/",
+//     "/dashboard/:path*",
+//     "/verify/:path*",
+//   ],
+// };
+
 export const config = {
-  matcher: [
-    "/auth/signin",
-    "/auth/signup",
-    "/",
-    "/dashboard/:path*",
-    "/verify/:path*",
-  ],
+  matcher: ["/dashboard/:path*", "/signin", "/signup", "/", "/verify/:path*"],
 };
+
