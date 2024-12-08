@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!token && url.pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/singin", request.url));
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
   return NextResponse.next();
   // return NextResponse.redirect(new URL("/home", request.url));

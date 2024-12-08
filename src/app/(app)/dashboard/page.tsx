@@ -28,6 +28,7 @@ function Dashboard() {
   };
 
   const { data: session } = useSession();
+  
 
   const form = useForm({
     resolver: zodResolver(AcceptMessageSchema),
@@ -131,7 +132,9 @@ function Dashboard() {
   };
 
   if (!session || !session.user) {
-    return <>Please login</>;
+    return <div className="h-lvh w-full flex items-center justify-center">
+      <p className="text-4xl">Please login</p>
+    </div>;
   }
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
