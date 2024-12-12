@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
+  const { data: session} = useSession();
   
 
   // console.log(session);
