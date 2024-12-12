@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/userModel";
+import { User} from "next-auth"
+import { Document } from "mongoose";
 
 console.log("auth options file");
 export const authOptions: NextAuthOptions = {
@@ -31,7 +33,7 @@ export const authOptions: NextAuthOptions = {
         credentials:
           | Record<"email" | "username" | "password", string>
           | undefined
-      ): Promise<any> {
+      ): Promise<User & Document> {
         // console.log("authorize code block");
         if (!credentials) {
           throw new Error("No credentials provided.");
