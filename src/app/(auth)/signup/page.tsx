@@ -67,8 +67,8 @@ const Page = () => {
     checkUsernameAvailable();
   }, [username]);
 
-  const onSubmit = async (data: z.infer<typeof signUpSchema>, e: any) => {
-    e.preventDefault()
+  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+  
     //TODO: print data here
     // console.log(data)
     setIsSubmitting(true);
