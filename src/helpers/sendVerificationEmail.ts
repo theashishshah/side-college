@@ -15,8 +15,8 @@ export async function sendVerificationEmail(
           react: VerificationEmail({ username, otp: verifyCode }),
         });
 
-        // console.log("inside helper, to sendVerificationEmail file", data)
-        // console.log("This is error we've got while sending email", error)
+        console.log("inside helper, to sendVerificationEmail file", data)
+        console.log("This is error we've got while sending email", error)
 
         return { success: true, message: "Verification email sent successfully" };
     } catch (emailError) {
