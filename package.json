@@ -1,7 +1,9 @@
 {
-  "name": "college-project-test",
+  "name": "mini-project",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "author": "Ashish Shah",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -29,7 +31,7 @@
     "embla-carousel-react": "^8.5.1",
     "lucide-react": "^0.468.0",
     "mongoose": "^8.8.2",
-    "next": "15.0.3",
+    "next": "^15.1.0",
     "next-auth": "^4.24.10",
     "openai": "^4.76.1",
     "react": "^18.3.1",
