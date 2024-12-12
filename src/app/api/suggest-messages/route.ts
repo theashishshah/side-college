@@ -1,37 +1,36 @@
-//TODO: cross check and re-write
+import { NextResponse } from "next/server";
 
-import { google } from "@ai-sdk/google";
-import { GoogleAICacheManager } from "@google/generative-ai/server";
-import { generateText } from "ai";
+export const runtime = "edge";
 
-const cacheManager = new GoogleAICacheManager(
-  process.env.GOOGLE_GENERATIVE_AI_API_KEY
-);
+export async function POST(req: Request) {
+  try {
+    const { prompt } = await req.json(); // Accept prompt dynamically
+    const response = await fetch("https://api.gemini.com/v1/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.GEMINI_API_KEY}`, // Replace with your Gemini API key
+      },
+      body: JSON.stringify({
+        model: "gemini-large", // Replace with the appropriate Gemini model
+        prompt,
+        max_tokens: 400,
+        stream: true, // Adjust based on Gemini's streaming support
+      }),
+    });
 
-// As of August 23rd, 2024, these are the only models that support caching
-type GoogleModelCacheableId =
-  | "models/gemini-1.5-flash-001"
-  | "models/gemini-1.5-pro-001";
+    if (!response.ok) {
+      const errorBody = await response.json();
+      return NextResponse.json(errorBody, { status: response.status });
+    }
 
-const model: GoogleModelCacheableId = "models/gemini-1.5-pro-001";
-
-const { name: cachedContent } = await cacheManager.create({
-  model,
-  contents: [
-    {
-      role: "user",
-      parts: [{ text: "1000 Lasanga Recipes..." }],
-    },
-  ],
-  ttlSeconds: 60 * 5,
-});
-
-const { text: veggieLasangaRecipe } = await generateText({
-  model: google(model, { cachedContent }),
-  prompt: "Write a vegetarian lasagna recipe for 4 people.",
-});
-
-const { text: meatLasangaRecipe } = await generateText({
-  model: google(model, { cachedContent }),
-  prompt: "Write a meat lasagna recipe for 12 people.",
-});
+    return new Response(response.body, {
+      headers: {
+        "Content-Type": "text/event-stream",
+      },
+    });
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

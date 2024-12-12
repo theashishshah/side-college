@@ -25,33 +25,39 @@ export async function GET(request: Request) {
   }
   //now it is mongoose object id, not normal string
   const userId = new mongoose.Types.ObjectId(user._id);
+  console.log("Do I have user ID", userId);
   try {
     const user = await UserModel.aggregate([
-      { $match: { id: userId } },
-      { $unwind: { path: "$messages", preserveNullAndEmptyArrays: true } },
+      { $match: { _id: userId } },
+      { $unwind: "$messages" },
       { $sort: { "messages.createdAt": -1 } },
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
-    ]);
+    ]).exec();
 
-    if(!user || user.length === 0){
-        return Response.json(
-          {
-            success: false,
-            message: "User not found.",
-          },
-          { status: 401 }
-        );
+    console.log("Just before return bad happend.");
+    console.log(user);
+    if (!user || user.length === 0) {
+      return Response.json(
+        {
+          success: false,
+          message: "User not found, something bad happend",
+        },
+        { status: 401 }
+      );
     }
-
+    console.log(
+      "Just before the sending message array in route file",
+      user[0].messages
+    );
     return Response.json(
       {
         success: true,
-        message: user[0].messages,
+        messages: user[0].messages,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error got while bringing all the messages for a user", error)
+    console.log("Error got while bringing all the messages for a user", error);
     return Response.json(
       {
         success: false,

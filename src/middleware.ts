@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
   // console.log("Middleware triggered");
   // console.log("Token:", token);
   // console.log("Request URL:", request.nextUrl);
-  console.log("Cookies:", request.cookies.getAll());
+  // console.log("Cookies:", request.cookies.getAll());
 
 
   if (
