@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    // console.log("Error while signing the user in signup route file", error);
+    console.log("Error while signing the user in signup route file", error);
 
     return NextResponse.json(
       {
