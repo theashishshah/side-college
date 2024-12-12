@@ -71,7 +71,7 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
-    // console.log("Error while verifying the code", error);
+    console.log("Error while verifying the code", error);
 
     return Response.json(
       {
