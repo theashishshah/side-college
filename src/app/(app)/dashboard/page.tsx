@@ -17,6 +17,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 function Dashboard() {
+  const { data: session, status } = useSession();
+  console.log("Session data:", session);
+  console.log("Session status:", status);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
@@ -27,12 +31,10 @@ function Dashboard() {
     setMessages(messages.filter((message) => message._id !== messageId));
   };
 
-  const { data: session } = useSession();
-  
-
   const form = useForm({
     resolver: zodResolver(AcceptMessageSchema),
   });
+
   const { register, watch, setValue } = form;
   // console.log(form) //TODO:
   const acceptMessages = watch("acceptMessages");
@@ -79,21 +81,24 @@ function Dashboard() {
           variant: "destructive",
         });
       } finally {
-        setIsSwitchLoading(false);
+        // setIsSwitchLoading(false);
         setIsLoading(false);
       }
     },
-    [setIsLoading, setMessages, toast]
+    [toast]
   );
 
   useEffect(() => {
-    if (!session || !session.user) {
-      return;
+    // if (!session || !session.user) {
+    //   return;
+    // }
+    if (status === "authenticated" && session?.user) {
+      fetchMessages();
+      fetchAcceptMessage();
     }
-
-    fetchMessages();
-    fetchAcceptMessage();
-  }, [session, fetchAcceptMessage, fetchMessages, setValue]);
+    // fetchMessages();
+    // fetchAcceptMessage();
+  }, [status, session, fetchAcceptMessage, fetchMessages]);
 
   // handle switch change
   const handleSwitchChange = async () => {
@@ -116,8 +121,8 @@ function Dashboard() {
       });
     }
   };
-
-  const { username } = session?.user as User;
+  console.log("Before username destructure");
+  const username  = session?.user?.username 
   //TODO: own research
 
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
@@ -131,23 +136,35 @@ function Dashboard() {
     });
   };
 
+  if (status === "loading") {
+    return (
+      <div className="h-lvh w-full flex items-center justify-center">
+        <p className="text-4xl">Loading session...</p>
+      </div>
+    );
+  }
+
   if (!session || !session.user) {
-    return <div className="h-lvh w-full flex items-center justify-center">
-      <p className="text-4xl">Please login</p>
-    </div>;
+    return (
+      <div className="h-lvh w-full flex items-center justify-center">
+        <p className="text-4xl">Please login</p>
+      </div>
+    );
   }
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{" "}
+        <h2 className="text-lg font-semibold mb-2 text-black">
+          Copy Your Unique Link
+        </h2>{" "}
         <div className="flex items-center">
           <input
             type="text"
             value={profileUrl}
             disabled
-            className="input input-bordered w-full p-2 mr-2"
+            className="input input-bordered w-full p-2 mr-2 text-black"
           />
           <Button onClick={copyToClipboard}>Copy</Button>
         </div>

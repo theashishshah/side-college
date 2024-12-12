@@ -39,11 +39,11 @@ const VerifyAccount = () => {
       toast({
         title: "Success",
         description: response.data.message,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
+        action: <ToastAction altText="Sign in">Sign in</ToastAction>,
         variant: "default",
       });
 
-      router.replace("signin");
+      router.replace("/signin");
     } catch (error) {
       console.error("Error in verifying the code", error);
       const axiosError = error as AxiosError<ApiResponse>;

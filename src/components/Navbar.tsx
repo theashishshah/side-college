@@ -5,8 +5,12 @@ import Link from "next/link";
 import { User } from "next-auth";
 import { Button } from "./ui/button";
 
+
 const Navbar = () => {
   const { data: session, status } = useSession();
+  
+
+  console.log(session);
   console.log("data is logged in navbar client side", session, status);
   const user: User = session?.user as User;
   return (
@@ -17,8 +21,10 @@ const Navbar = () => {
         </a>
         {session ? (
           <>
-            <span className="mr-4">Welcome {user?.username || user?.email}</span>{" "}
-            <Button className="w-full md:w-auto" onClick={() => signOut}>
+            <span className="mr-4">
+              Welcome {user?.username || user?.email}
+            </span>{" "}
+            <Button className="w-full md:w-auto" onClick={() => signOut()}>
               Log out
             </Button>
           </>

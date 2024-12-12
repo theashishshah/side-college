@@ -4,10 +4,19 @@ export { default } from "next-auth/middleware";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-  const url = request.nextUrl;
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET_KEY,
+  });
 
-  // if you've token then where you can go, if no then where you can go
+  const url = request.nextUrl;
+  // console.log("Console log in middleware file", token)
+  // console.log("am I getting url", url)
+  // console.log("Middleware triggered");
+  // console.log("Token:", token);
+  // console.log("Request URL:", request.nextUrl);
+  console.log("Cookies:", request.cookies.getAll());
+
 
   if (
     token &&

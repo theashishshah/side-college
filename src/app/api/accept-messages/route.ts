@@ -24,6 +24,8 @@ export async function POST(request: Request) {
   }
 
   const userId = user._id;
+  // const dataValue = await request.json()
+  // console.log(dataValue)
   const { acceptMessage } = await request.json();
 
   try {

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Form,
+  Form, 
   FormControl,
   FormField,
   FormItem,
@@ -32,9 +32,10 @@ const Page = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof SignInSchema>) => {
-    const response = await signIn("credentials", {
+    console.log("Console log in signin file, client side", data)
+    const response = await signIn("signin", {
       redirect: false,
-      identifier: data.identifier,
+      username: data.identifier,
       password: data.password,
     });
     console.log("Sign in result", response);
@@ -44,17 +45,24 @@ const Page = () => {
         title: "Login failed",
         description: "Invalid username or password",
         variant: "destructive",
+        duration: 5000,
       });
     } else {
       toast({
         title: "Login successfull",
         description: "Nothing got any message",
         variant: "default",
+        duration: 5000,
+        
       });
+      
     }
-
+    // console.log("Something is wrong going on here.")
+    console.log(response?.url)
+    // router.replace("/dashboard");
     if (response?.url) {
-      router.replace("/dashboard");
+      
+      router.replace("dashboard");
     }
   };
 

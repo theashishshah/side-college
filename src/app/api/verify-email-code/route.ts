@@ -8,8 +8,9 @@ export async function POST(request: Request) {
   try {
     const { username, code } = await request.json();
     const decodedUsername = decodeURIComponent(username);
+    console.log(decodedUsername)
 
-    const user = await UserModel.findOne({ decodedUsername });
+    const user = await UserModel.findOne({ username: decodedUsername });
 
     if (!user) {
       return Response.json(
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
           status: 200,
         }
       );
+      
     }
 
     // if code time excceds the time
