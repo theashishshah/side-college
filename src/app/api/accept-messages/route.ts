@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 }
 
 // function to check isAcceptingMessage
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
   console.log("Db is connected in accept message route in GET function.");
 
@@ -106,7 +106,7 @@ export async function GET(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    // console.log("Error getting is accepting message status.", error);
+    console.log("Error getting is accepting message status.", error);
     return Response.json(
       {
         success: false,
