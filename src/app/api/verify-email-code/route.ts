@@ -3,12 +3,12 @@ import UserModel from "@/models/userModel";
 
 export async function POST(request: Request) {
   await dbConnect();
-  console.log("DB is connected in verify-email-code file");
+  // console.log("DB is connected in verify-email-code file");
 
   try {
     const { username, code } = await request.json();
     const decodedUsername = decodeURIComponent(username);
-    console.log(decodedUsername)
+    // console.log(decodedUsername)
 
     const user = await UserModel.findOne({ username: decodedUsername });
 
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
-    console.log("Error while verifying the code", error);
+    // console.log("Error while verifying the code", error);
 
     return Response.json(
       {

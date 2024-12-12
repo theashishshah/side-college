@@ -5,8 +5,8 @@ import { useSession } from "next-auth/react";
 export default function TestingPage() {
   const { data: session, status } = useSession();
 
-  console.log("Session data:", session);
-  console.log("Session status:", status);
+  // console.log("Session data:", session);
+  // console.log("Session status:", status);
 
   if (status === "loading") return <p>Loading session...</p>;
   if (!session) return <p>No session found. Please log in.</p>;

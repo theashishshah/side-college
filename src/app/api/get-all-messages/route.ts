@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 export async function GET(request: Request) {
   await dbConnect();
 
-  console.log("DB is connected in all message backend file");
+  // console.log("DB is connected in all message backend file");
   const session = await getServerSession(authOptions);
   const user: User = session?.user as User;
 
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
   }
   //now it is mongoose object id, not normal string
   const userId = new mongoose.Types.ObjectId(user._id);
-  console.log("Do I have user ID", userId);
+  // console.log("Do I have user ID", userId);
   try {
     const user = await UserModel.aggregate([
       { $match: { _id: userId } },
@@ -34,8 +34,8 @@ export async function GET(request: Request) {
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
     ]).exec();
 
-    console.log("Just before return bad happend.");
-    console.log(user);
+    // console.log("Just before return bad happend.");
+    // console.log(user);
     if (!user || user.length === 0) {
       return Response.json(
         {
@@ -45,10 +45,10 @@ export async function GET(request: Request) {
         { status: 401 }
       );
     }
-    console.log(
-      "Just before the sending message array in route file",
-      user[0].messages
-    );
+    // console.log(
+    //   "Just before the sending message array in route file",
+    //   user[0].messages
+    // );
     return Response.json(
       {
         success: true,

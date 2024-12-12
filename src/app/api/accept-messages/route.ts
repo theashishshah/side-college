@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import { User } from "next-auth";
-
+ 
 
 // function to toggle to message accepting status
 export async function POST(request: Request) {
@@ -26,15 +26,15 @@ export async function POST(request: Request) {
   const userId = user._id;
   // const dataValue = await request.json()
   // console.log(dataValue)
-  const { acceptMessage } = await request.json();
+  const { acceptMessages } = await request.json();
 
   try {
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      { isAcceptingMessage: acceptMessage },
+      { isAcceptingMessage: acceptMessages },
       { new: true }
     );
-
+ 
     if (!updatedUser) {
       return Response.json(
         {
@@ -106,7 +106,7 @@ export async function GET(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error getting is accepting message status.", error);
+    // console.log("Error getting is accepting message status.", error);
     return Response.json(
       {
         success: false,

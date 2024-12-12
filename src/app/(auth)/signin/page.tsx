@@ -32,13 +32,13 @@ const Page = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof SignInSchema>) => {
-    console.log("Console log in signin file, client side", data)
+    // console.log("Console log in signin file, client side", data)
     const response = await signIn("signin", {
       redirect: false,
       username: data.identifier,
       password: data.password,
     });
-    console.log("Sign in result", response);
+    // console.log("Sign in result", response);
 
     if (response?.error) {
       toast({
@@ -58,7 +58,7 @@ const Page = () => {
       
     }
     // console.log("Something is wrong going on here.")
-    console.log(response?.url)
+    // console.log(response?.url)
     // router.replace("/dashboard");
     if (response?.url) {
       

@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   await dbConnect();
-  console.log("DB is connected in signup route file.");
+  // console.log("DB is connected in signup route file.");
 
   try {
     const { email, username, password } = await request.json();
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     // now user is saved in our database, then send verification mail
     const emailResponse = await sendVerificationEmail(email, username, verifyCode)
 
-    console.log("What we've got data from sendVerificationEmail in signup route file",emailResponse)
+    // console.log("What we've got data from sendVerificationEmail in signup route file",emailResponse)
 
     if(!emailResponse.success){
       return NextResponse.json(
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.log("Error while signing the user in signup route file", error);
+    // console.log("Error while signing the user in signup route file", error);
 
     return NextResponse.json(
       {

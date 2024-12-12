@@ -29,7 +29,7 @@ type MessageCardProps = {
 };
 
 const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
-  console.log("What data I'm getting as message", message)
+  // console.log("What data I'm getting as message", message)
   const createdAt = message.createdAt
   const date = new Date(createdAt)
   const options = {
@@ -41,14 +41,14 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
     hour12: true, // 12-hour clock with AM/PM
   };
   const formattedDate = date.toLocaleString("en-US", options);
-  console.log(formattedDate)
+  // console.log(formattedDate)
   const { toast } = useToast();
   const handleDeleteConfirm = async () => {
     const response = await axios.delete(`/api/delete-message/${message._id}`);
     toast({
       title: response.data.message,
       description: "your feedback is deleted",
-      variant: "destructive",
+      variant: "default",
     });
 
     onMessageDelete(message._id);

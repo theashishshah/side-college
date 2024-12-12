@@ -108,7 +108,12 @@ export default function SendMessage() {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Send Anonymous Message to @{username}</FormLabel>
+                <FormLabel className="text-lg font-semibold mb-2 text-black">
+                  Send Anonymous Message to{" "}
+                  <span className="text-xl font-bold text-blue-600 bg-gray-100 px-4 py-2 rounded-lg  hover:text-white hover:bg-blue-600 ">
+                    @{username}
+                  </span>
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Write your anonymous message here"

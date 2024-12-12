@@ -32,20 +32,20 @@ export const authOptions: NextAuthOptions = {
           | Record<"email" | "username" | "password", string>
           | undefined
       ): Promise<any> {
-        console.log("authorize code block");
+        // console.log("authorize code block");
         if (!credentials) {
           throw new Error("No credentials provided.");
         }
         const { email, password, username } = credentials;
 
         await dbConnect();
-        console.log("DB is connected in option file.");
-        console.log("in authorize section");
+        // console.log("DB is connected in option file.");
+        // console.log("in authorize section");
         try {
           const user = await UserModel.findOne({
             $or: [{ email }, { username }],
           });
-          console.log("User found in database:", user);
+          // console.log("User found in database:", user);
 
           if (!user) {
             throw new Error("No user found with this email or username");
@@ -63,8 +63,8 @@ export const authOptions: NextAuthOptions = {
           );
 
           if (isPasswordCorrect) {
-            console.log("User authenticated:", user); // Debug log
-            console.log("User's user name in the options file", user.username);
+            // console.log("User authenticated:", user); // Debug log
+            // console.log("User's user name in the options file", user.username);
             return user;
           } else {
             throw new Error("Please provide correct password.");
@@ -80,16 +80,16 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       // This block runs only on the initial login
       if (user) {
-        console.log("User in JWT callback (initial login):", user);
+        // console.log("User in JWT callback (initial login):", user);
         token._id = user._id?.toString();
         token.isVerified = user.isVerified;
         token.isAcceptingMessage = user.isAcceptingMessage;
         token.username = user.username;
       } else {
-        console.log("JWT callback - Subsequent requests, no user:", user);
+        // console.log("JWT callback - Subsequent requests, no user:", user);
       }
 
-      console.log("Token data in JWT callback:", token);
+      // console.log("Token data in JWT callback:", token);
       return token;
     },
     // async session({ session, token }) {
@@ -112,7 +112,7 @@ export const authOptions: NextAuthOptions = {
         isAcceptingMessage: token.isAcceptingMessage,
       };
 
-      console.log("Session data in session callback:", session);
+      // console.log("Session data in session callback:", session);
       return session;
     },
   },

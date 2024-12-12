@@ -9,19 +9,19 @@ const connection: ConnectionObject = {};
 console.log("database connection page")
 async function dbConnect(): Promise<void> {
   if (connection.isConnected) {
-    console.log("Already database is connected");
+    // console.log("Already database is connected");
     return;
   }
 
   try {
     const db = await mongoose.connect(process.env.MONGODB_URI || "", {});
-    console.log("What we get after connecting the database", db);
+    // console.log("What we get after connecting the database", db);
     console.log(db.connections);
-    console.log("Connected to database:", db.connections[0].name);
+    // console.log("Connected to database:", db.connections[0].name);
 
     connection.isConnected = db.connections[0].readyState;
 
-    console.log("DB connected successfully");
+    // console.log("DB connected successfully");
   } catch (error) {
     console.log("Database connection failed", error);
     process.exit(1);

@@ -10,8 +10,8 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   
 
-  console.log(session);
-  console.log("data is logged in navbar client side", session, status);
+  // console.log(session);
+  // console.log("data is logged in navbar client side", session, status);
   const user: User = session?.user as User;
   return (
     <nav className="px-4 py-1 md:py-3 shadow-md bg-[#112D4E] text-white">

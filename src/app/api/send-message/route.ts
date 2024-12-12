@@ -4,7 +4,7 @@ import { Message } from "@/models/userModel";
 
 export async function POST(request: Request) {
   await dbConnect();
-  console.log("DB is connected in send message route file");
+  // console.log("DB is connected in send message route file");
 
   const { username, content } = await request.json();
 

@@ -18,8 +18,8 @@ import { useForm } from "react-hook-form";
 
 function Dashboard() {
   const { data: session, status } = useSession();
-  console.log("Session data:", session);
-  console.log("Session status:", status);
+  // console.log("Session data:", session);
+  // console.log("Session status:", status);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,10 +63,10 @@ function Dashboard() {
     async (refresh: boolean | false) => {
       setIsLoading(true);
       setIsSwitchLoading(false);
-      console.log("refresh value", refresh)
+      // console.log("refresh value", refresh)
       try {
         const response = await axios.get<ApiResponse>("/api/get-all-messages");
-        console.log("what did I get in response after API call", response)
+        // console.log("what did I get in response after API call", response)
         setMessages(response.data.messages || []);
         if (refresh) {
           toast({
@@ -92,18 +92,19 @@ function Dashboard() {
 
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
-      console.log("inside useEffect where I'm fetching all messages.")
+      // console.log("inside useEffect where I'm fetching all messages.")
       fetchMessages();
       fetchAcceptMessage();
     }
   }, [status, session, fetchAcceptMessage, fetchMessages]);
 
-  // handle switch change
+  // handle switch change 
   const handleSwitchChange = async () => {
     try {
       const response = await axios.post<ApiResponse>("/api/accept-messages", {
         acceptMessages: !acceptMessages,
       });
+      // console.log("What response I'm geetting after switching the button", response)
       setValue("acceptMessages", !acceptMessages);
       toast({
         title: response.data.message,
