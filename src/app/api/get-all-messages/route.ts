@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 
 // backend to bring all messages to user
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
 
   // console.log("DB is connected in all message backend file");
