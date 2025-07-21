@@ -3,13 +3,13 @@ import { getServerSession } from "next-auth";
 import dbConnect from "@/lib/dbConnect";
 import { User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { NextRequest, NextResponse } from "next/server"; 
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
-  request: NextRequest, 
-  { params }: { params: { messageId: string } } 
+  request: NextRequest,
+  { params }: { params: { messageid: string } } // FIX: Use lowercase 'messageid'
 ) {
-  const messageId = params.messageId;
+  const messageId = params.messageid;
 
   await dbConnect();
 
@@ -20,9 +20,9 @@ export async function DELETE(
     return NextResponse.json(
       {
         success: false,
-        message: "Not authenticated user is accessing",
+        message: "Not authenticated",
       },
-      { status: 401 } 
+      { status: 401 }
     );
   }
 
@@ -32,7 +32,7 @@ export async function DELETE(
       { $pull: { messages: { _id: messageId } } }
     );
 
-    if (updatedResult.modifiedCount == 0) {
+    if (updatedResult.modifiedCount === 0) {
       return NextResponse.json(
         {
           success: false,
@@ -50,7 +50,7 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error deleting message:", error); 
+    console.error("Error deleting message:", error);
     return NextResponse.json(
       {
         success: false,
