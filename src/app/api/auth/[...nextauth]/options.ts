@@ -67,13 +67,16 @@ export const authOptions: NextAuthOptions = {
           if (isPasswordCorrect) {
             // console.log("User authenticated:", user); // Debug log
             // console.log("User's user name in the options file", user.username);
-            return user;
+            return {
+             
+              _id: (user as Document & { _id: string })._id.toString(),
+            } as User & Document;
           } else {
             throw new Error("Please provide correct password.");
           }
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error("Error during authentication:", error);
-          throw new Error(error);
+          throw error
         }
       },
     }),
