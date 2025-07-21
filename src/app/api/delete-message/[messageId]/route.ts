@@ -3,9 +3,10 @@ import { getServerSession } from "next-auth";
 import dbConnect from "@/lib/dbConnect";
 import { User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { messageId: string } }
 ) {
   const messageId = params.messageId;
@@ -17,7 +18,7 @@ export async function DELETE(
   const user: User = session?.user as User;
 
   if (!session || !session.user) {
-    return Response.json(
+    return NextResponse.json(
       {
         success: false,
         message: "Not authenticated user is accessing",
